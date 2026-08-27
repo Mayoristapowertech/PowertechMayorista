@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POWERTECH MAYORISTA</title>
+    <script src="https://tailwindcss.com"></script>
+    <style>
+        body { 
+            background-color: #000000 !important; 
+            color: #e5e7eb !important; 
+            -webkit-tap-highlight-color: transparent !important;
+        }
+        .tienda-tarjeta-lista { 
+            background-color: #0c0c10 !important; 
+            border: 1px solid #1a1a24 !important; 
+            -webkit-tap-highlight-color: transparent !important;
+            user-select: none !important;
+        }
+        .foto-miniatura-fija { 
+            width: 64px !important; 
+            height: 64px !important; 
+            min-width: 64px !important; 
+            object-fit: cover !important; 
+            border-radius: 8px !important; 
+        }
+        .texto-oro-legible { color: #dfb15b !important; }
+        .btn-oro-comprar { 
+            background-color: #c49a45 !important; 
+            color: #000000 !important; 
+            font-weight: 900 !important; 
+            outline: none !important;
+        }
+        .btn-oro-comprar:hover { background-color: #aa8235 !important; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        #modal-producto, #modal-producto * { -webkit-tap-highlight-color: transparent !important; outline: none !important; }
+    </style>
+</head>
+<body class="font-sans min-h-screen pb-24">
+
+    <header class="tienda-tarjeta-lista border-b sticky top-0 z-40 px-4 py-3 shadow-md">
+        <div class="max-w-xl mx-auto flex items-center justify-between gap-2">
+            <div class="flex items-center gap-3 min-w-0">
+                <img src="logo.png" alt="" class="h-8 w-auto object-contain shrink-0" onerror="this.style.display='none'">
+                <div class="truncate">
+                    <h1 class="font-black text-base tracking-wider text-white uppercase leading-none">Powertech</h1>
+                    <span class="text-[10px] text-oro-legible tracking-tight block mt-1 font-medium">Distribuidora Mayorista</span>
+                </div>
+            </div>
+            <button onclick="toggleCarrito()" class="bg-black text-white px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 border border-gray-800 shrink-0">
+                <span>🛒</span>
+                <span id="contador-badge" class="btn-oro-comprar px-1.5 py-0.5 rounded text-[10px]">0</span>
+            </button>
+        </div>
+        <div class="max-w-xl mx-auto flex border-t border-neutral-900 mt-3 pt-2 text-center text-xs font-bold">
+            <button onclick="cambiarSeccion('seccion-tienda')" id="tab-tienda" class="flex-1 py-2 text-white border-b-2 border-amber-500">🛒 Catálogo</button>
+            <button onclick="cambiarSeccion('seccion-nosotros')" id="tab-nosotros" class="flex-1 py-2 text-gray-500 border-b-2 border-transparent">🏢 Quiénes Somos</button>
+        </div>
+    </header>
+
+    <div id="banner-minimo" class="bg-black border-b border-gray-900 text-center py-2 px-4 text-xs font-medium text-oro-legible">
+        ⭐ Compra mínima mayorista: <span class="font-bold underline text-white">$50.000</span>
+    </div>
+
+    <div id="seccion-tienda" class="max-w-xl mx-auto px-4 mt-4 block">
+        <div class="grid grid-cols-2 gap-2 mb-4">
+            <button onclick="filtrarCategoria('cargadores')" class="tienda-tarjeta-lista p-3 rounded-xl text-center active:scale-95 transition-transform">
+                <span class="text-xl block mb-1">🔌</span>
+                <span class="text-xs font-bold text-white uppercase tracking-wider">Cargadores</span>
+            </button>
+            <button onclick="filtrarCategoria('auriculares')" class="tienda-tarjeta-lista p-3 rounded-xl text-center active:scale-95 transition-transform">
+                <span class="text-xl block mb-1">🎧</span>
+                <span class="text-xs font-bold text-white uppercase tracking-wider">Auriculares</span>
+            </button>
+        </div>
+
+        <div class="relative mb-4">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500 text-xs">🔍</span>
+            <input type="text" id="buscador" oninput="filtrarProductos()" placeholder="¿Qué artículo buscas...?" class="w-full bg-neutral-900 border border-neutral-800 rounded-xl pl-9 pr-4 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500 placeholder-gray-600">
+        </div>
+
+        <div class="flex gap-2 overflow-x-auto pb-2 text-xs no-scrollbar mb-2">
+            <button onclick="filtrarCategoria('todos')" class="btn-categoria btn-oro-comprar px-3 py-1.5 rounded-lg font-bold shrink-0">Todos</button>
+            <button onclick="filtrarCategoria('cargadores')" class="btn-categoria tienda-tarjeta-lista text-gray-400 px-3 py-1.5 rounded-lg font-medium shrink-0">Cargadores</button>
+            <button onclick="filtrarCategoria('auriculares')" class="btn-categoria tienda-tarjeta-lista text-gray-400 px-3 py-1.5 rounded-lg font-medium shrink-0">Auriculares</button>
+            <button onclick="filtrarCategoria('cables')" class="btn-categoria tienda-tarjeta-lista text-gray-400 px-3 py-1.5 rounded-lg font-medium shrink-0">Cables</button>
+            <button onclick="filtrarCategoria('iphone')" class="btn-categoria tienda-tarjeta-lista text-gray-400 px-3 py-1.5 rounded-lg font-medium shrink-0">iPhone</button>
+            <button onclick="filtrarCategoria('perfumes')" class="btn-categoria tienda-tarjeta-lista text-gray-400 px-3 py-1.5 rounded-lg font-medium shrink-0">Perfumes</button>
+            <button onclick="filtrarCategoria('novedades')" class="btn-categoria tienda-tarjeta-lista text-gray-400 px-3 py-1.5 rounded-lg font-medium shrink-0">Novedades</button>
+            <button onclick="filtrarCategoria('otros')" class="btn-categoria tienda-tarjeta-lista text-gray-400 px-3 py-1.5 rounded-lg font-medium shrink-0">Otros</button>
+        </div>
+
+        <div id="sin-resultados" class="hidden text-center py-10 text-gray-500 text-xs">
+            <p>❌ No hay artículos que coincidan.</p>
+        </div>
+
+        <main id="lista-productos" class="flex flex-col gap-2 mt-3">
+
+            <div class="card-producto tienda-tarjeta-lista p-3 rounded-xl flex gap-3 items-center justify-between" data-nombre="cargador samsung 30w con cable c a c tipo rapida original kargador" data-categoria="cargadores">
+                <div onclick="abrirDetalle('Cargador Samsung 30W + Cable C a C', 'prod1.jpg', '18.500', 'Cargador de pared de alta velocidad compatible con la tecnología Super Fast Charging de Samsung. Ideal para modelos de gama media y alta que demandan energía eficiente sin sobrecalentar el dispositivo. Incluye cable reforzado Tipo C a Tipo C homologado.', ['Potencia máxima de salida: 30W', 'Incluye cable USB-C a USB-C de 1 metro', 'Protección contra picos de tensión y temperatura', 'Excelente rotación en kioscos y almacenes'])" class="flex items-center gap-3 min-w-0 flex-1 cursor-pointer">
+                    <img src="prod1.jpg" alt="" class="foto-miniatura-fija" onerror="this.src='https://placehold.co'">
+                    <div class="min-w-0">
+                        <span class="text-[9px] text-oro-legible font-bold uppercase tracking-wider block">Cargadores</span>
+                        <h3 class="font-bold text-sm text-white truncate">Cargador Samsung 30W (Cable C a C)</h3>
+                        <p class="text-[10px] text-gray-500">Ver ficha y descripción 📋</p>
+                        <p class="text-oro-legible font-black text-sm mt-0.5">$18.500</p>
+                    </div>
+                </div>
+                <button onclick="agregarAlCarrito('Cargador Samsung 30W (Cable C a C)', 18500)" class="btn-oro-comprar px-3 py-2 rounded-lg text-xs shrink-0">Añadir</button>
+            </div>
