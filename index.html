@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POWERTECH MAYORISTA</title>
+    <!-- Tailwind CSS para diseño moderno -->
+    <script src="https://tailwindcss.com"></script>
+    <style>
+        body { background-color: #000000; }
+        .bg-tarjeta { background-color: #0c0c10; }
+        .border-suave { border-color: #1a1a24; }
+        .text-dorado { color: #dfb15b; }
+        .bg-dorado { background-color: #c49a45; }
+        .bg-dorado-hover:hover { background-color: #aa8235; }
+        /* Ocultar barra de scroll en categorías */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="text-gray-200 font-sans min-h-screen pb-24">
+
+    <!-- HEADER / ENCABEZADO -->
+    <header class="bg-tarjeta border-b border-suave sticky top-0 z-40 px-4 py-3 shadow-md">
+        <div class="max-w-xl mx-auto flex items-center justify-between gap-2">
+            
+            <div class="flex items-center gap-3 min-w-0">
+                <img src="logo.png" alt="" class="h-8 w-auto object-contain shrink-0" onerror="this.style.display='none'">
+                <div class="truncate">
+                    <h1 class="font-black text-base tracking-wider text-white uppercase leading-none">Powertech</h1>
+                    <span class="text-[10px] text-dorado tracking-tight block mt-1 font-medium">Mayorista de Accesorios</span>
+                </div>
+            </div>
+            
+            <button onclick="toggleCarrito()" class="bg-black hover:bg-gray-900 text-white px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 border border-suave transition shrink-0">
+                <span>🛒</span>
+                <span id="contador-badge" class="bg-dorado text-black font-black px-1.5 py-0.5 rounded text-[10px]">0</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- COMPRA MÍNIMA -->
+    <div class="bg-black border-b border-suave text-center py-2 px-4 text-xs font-medium text-dorado">
+        ⭐ Compra mínima mayorista: <span class="font-bold underline text-white">$50.000</span>
+    </div>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <div class="max-w-xl mx-auto px-4 mt-4">
+        
+        <!-- BUSCADOR -->
+        <div class="relative mb-4">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-500 text-xs">🔍</span>
+            <input type="text" id="buscador" oninput="filtrarProductos()" placeholder="¿Qué artículo buscas...?" class="w-full bg-tarjeta border border-suave rounded-xl pl-9 pr-4 py-2.5 text-xs text-white focus:outline-none focus:border-dorado transition placeholder-gray-600 shadow-sm">
+        </div>
+
+        <!-- FILTROS POR CATEGORÍA -->
+        <div class="flex gap-2 overflow-x-auto pb-2 text-xs no-scrollbar">
+            <button onclick="filtrarCategoria('todos')" class="btn-categoria bg-dorado text-black px-3 py-1.5 rounded-lg font-bold shrink-0 transition">Todos</button>
+            <button onclick="filtrarCategoria('cargadores')" class="btn-categoria bg-tarjeta text-gray-400 px-3 py-1.5 rounded-lg font-medium border border-suave shrink-0 transition">Cargadores</button>
+            <button onclick="filtrarCategoria('cables')" class="btn-categoria bg-tarjeta text-gray-400 px-3 py-1.5 rounded-lg font-medium border border-suave shrink-0 transition">Cables</button>
+            <button onclick="filtrarCategoria('audio')" class="btn-categoria bg-tarjeta text-gray-400 px-3 py-1.5 rounded-lg font-medium border border-suave shrink-0 transition">Audio</button>
+            <button onclick="filtrarCategoria('energia')" class="btn-categoria bg-tarjeta text-gray-400 px-3 py-1.5 rounded-lg font-medium border border-suave shrink-0 transition">Energía</button>
+            <button onclick="filtrarCategoria('auto')" class="btn-categoria bg-tarjeta text-gray-400 px-3 py-1.5 rounded-lg font-medium border border-suave shrink-0 transition">Auto</button>
+        </div>
+
+        <!-- AVISO SIN RESULTADOS -->
+        <div id="sin-resultados" class="hidden text-center py-10 text-gray-500 text-xs">
+            <p>❌ No hay artículos que coincidan con la búsqueda.</p>
+        </div>
+
+        <!-- CATÁLOGO EN FORMATO LISTA FLUIDA -->
+        <main id="lista-productos" class="flex flex-col gap-3 mt-3">
+
+            <!-- Artículo 1 -->
+            <div class="card-producto bg-tarjeta p-3 rounded-xl border border-suave flex gap-3 items-center justify-between" data-nombre="combo 1 cargadores rapida cables tipo c lightning mayorista" data-categoria="cargadores">
+                <div class="flex items-center gap-3 min-w-0 flex-1">
+                    <!-- Al hacer clic en la foto, se abre el modal -->
+                    <div onclick="abrirDetalle('Combo 1: Carga Rápida (X20)', 'prod1.jpg', '45.000', 'Surtido mayorista listo para revender. Incluye cargadores de pared homologados de excelente salida y cables reforzados de alta durabilidad en empaque individual.', ['10x Cables Tipo C a Tipo C reforzados', '10x Cargadores de pared rápidos homologados', 'Excelente margen de ganancia para revendedores'])" class="w-20 h-20 rounded-lg overflow-hidden bg-black border border-suave flex items-center justify-center shrink-0 cursor-pointer active:scale-95 transition-transform">
+                        <img src="prod1.jpg" alt="" class="w-full h-full object-cover" onerror="this.src='https://placehold.co'">
+                    </div>
+                    <div class="min-w-0 flex-1 cursor-pointer" onclick="abrirDetalle('Combo 1: Carga Rápida (X20)', 'prod1.jpg', '45.000', 'Surtido mayorista listo para revender. Incluye cargadores de pared homologados de excelente salida y cables reforzados de alta durabilidad en empaque individual.', ['10x Cables Tipo C a Tipo C reforzados', '10x Cargadores de pared rápidos homologados', 'Excelente margen de ganancia para revendedores'])">
+                        <span class="text-[9px] text-dorado font-bold uppercase tracking-wider block">Combos</span>
+                        <h3 class="font-bold text-sm text-white truncate mt-0.5">Combo 1: Carga Rápida (X20)</h3>
+                        <p class="text-[11px] text-gray-500 mt-0.5">Tocá para ver especificaciones 📋</p>
+                        <p class="text-dorado font-black text-sm mt-1">$45.000</p>
+                    </div>
+                </div>
+                <div class="shrink-0">
+                    <button onclick="agregarAlCarrito('Combo 1: Carga Rápida', 45000)" class="bg-dorado text-black font-extrabold px-3 py-2 rounded-lg text-xs bg-dorado-hover transition shadow-sm">Añadir</button>
+                </div>
+            </div>
+
+            <!-- Artículo 2 -->
+            <div class="card-producto bg-tarjeta p-3 rounded-xl border border-suave flex gap-3 items-center justify-between" data-nombre="auriculares bluetooth inalambricos f9 tactil pro audio" data-categoria="audio">
+                <div class="flex items-center gap-3 min-w-0 flex-1">
+                    <div onclick="abrirDetalle('Auriculares Bluetooth F9 Pro', 'prod2.jpg', '5.800', 'Auriculares inalámbricos con excelente fidelidad de audio y control táctil integrado. El estuche posee pantalla LED digital para batería y funciona como cargador portátil de emergencia.', ['Conectividad Bluetooth 5.1 estable', 'Estuche con función Powerbank integrada', 'Pantalla LED indicadora de porcentaje', 'Compra mínima de este ítem: 5 unidades'])" class="w-20 h-20 rounded-lg overflow-hidden bg-black border border-suave flex items-center justify-center shrink-0 cursor-pointer active:scale-95 transition-transform">
+                        <img src="prod2.jpg" alt="" class="w-full h-full object-cover" onerror="this.src='https://placehold.co'">
+                    </div>
+                    <div class="min-w-0 flex-1 cursor-pointer" onclick="abrirDetalle('Auriculares Bluetooth F9 Pro', 'prod2.jpg', '5.800', 'Auriculares inalámbricos con excelente fidelidad de audio y control táctil integrado. El estuche posee pantalla LED digital para batería y funciona como cargador portátil de emergencia.', ['Conectividad Bluetooth 5.1 estable', 'Estuche con función Powerbank integrada', 'Pantalla LED indicadora de porcentaje', 'Compra mínima de este ítem: 5 unidades'])">
+                        <span class="text-[9px] text-dorado font-bold uppercase tracking-wider block">Audio</span>
+                        <h3 class="font-bold text-sm text-white truncate mt-0.5">Auriculares Bluetooth F9 Pro</h3>
+                        <p class="text-[11px] text-gray-500 mt-0.5">Tocá para ver especificaciones 📋</p>
+                        <p class="text-dorado font-black text-sm mt-1">$5.800 <span class="text-[10px] font-normal text-gray-500">c/u</span></p>
+                    </div>
+                </div>
+                <div class="shrink-0">
+                    <button onclick="agregarAlCarrito('Auriculares Bluetooth F9 Pro', 5800)" class="bg-dorado text-black font-extrabold px-3 py-2 rounded-lg text-xs bg-dorado-hover transition shadow-sm">Añadir</button>
+                </div>
+            </div>
+
+            <!-- Artículo 3 -->
+            <div class="card-producto bg-tarjeta p-3 rounded-xl border border-suave flex gap-3 items-center justify-between" data-nombre="cargador de auto dual usb carga rapida encendedor" data-categoria="auto">
+                <div class="flex items-center gap-3 min-w-0 flex-1">
