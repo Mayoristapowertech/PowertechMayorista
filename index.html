@@ -124,44 +124,60 @@
 
 <body class="bg-black text-gray-200 font-body min-h-screen pb-24">
 
-<!-- ===================== HEADER FIJO ===================== -->
-<header class="fixed top-0 left-0 right-0 z-40 bg-black/95 backdrop-blur border-b border-gold-dark/40">
+<!-- ===================== HEADER FIJO ===================== --> <header class="fixed top-0 left-0 right-0 z-40 bg-black/95 backdrop-blur border-b border-gold-dark/40"> <!-- Logo + nombre de marca --> <div class="relative flex flex-col items-center justify-center px-3 pt-4 pb-3 max-w-3xl mx-auto">
+<!-- Botón carrito -->
+<button id="cartBtn" onclick="openCart()"
+  class="absolute left-3 top-4 flex items-center gap-1.5 bg-neutral-900 border border-gold-dark/60 rounded-full px-3 py-2 active:scale-95 transition-transform">
 
-  <!-- Logo + nombre de marca -->
-  <div class="relative flex flex-col items-center justify-center px-3 pt-2.5 pb-3 max-w-3xl mx-auto">
+  <svg class="w-5 h-5 gold-text" fill="none" viewBox="0 0 24 24"
+    stroke="currentColor" stroke-width="1.8">
+    <path stroke-linecap="round" stroke-linejoin="round"
+      d="M2.25 3h1.386c.51 0 .955.343 1.087.836l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 1.994-4.693 2.602-7.152.078-.324-.145-.633-.478-.633H5.106M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+  </svg>
 
-    <!-- Botón carrito -->
-    <button id="cartBtn" onclick="openCart()"
-      class="absolute right-3 top-4 relative flex items-center gap-1.5 bg-neutral-900 border border-gold-dark/60 rounded-full px-3 py-2 active:scale-95 transition-transform">
+  <span id="cartCount"
+    class="text-xs font-bold gold-text min-w-[14px] text-center">0</span>
+</button>
 
-      <svg class="w-5 h-5 gold-text" fill="none" viewBox="0 0 24 24"
-        stroke="currentColor" stroke-width="1.8">
-        <path stroke-linecap="round" stroke-linejoin="round"
-          d="M2.25 3h1.386c.51 0 .955.343 1.087.836l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 1.994-4.693 2.602-7.152.078-.324-.145-.633-.478-.633H5.106M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
-      </svg>
+<!-- LOGO 3 VECES MÁS GRANDE -->
+<img
+  src="logo.png"
+  alt="Powertech Mayorista"
+  class="h-72 w-72 sm:h-72 sm:w-72 rounded-2xl object-cover ring-2 ring-gold-dark/60 shadow-lg shadow-gold-dark/10"
+  onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 120 120%22%3E%3Crect width=%22120%22 height=%22120%22 rx=%2224%22 fill=%22%23111111%22/%3E%3Ctext x=%2250%25%22 y=%2258%25%22 font-size=%2250%22 fill=%22%23C9A227%22 text-anchor=%22middle%22 font-family=%22Arial%22 font-weight=%22bold%22%3EP%3C/text%3E%3C/svg%3E';">
 
-      <span id="cartCount"
-        class="text-xs font-bold gold-text min-w-[14px] text-center">0</span>
-    </button>
+<!-- Nombre -->
+<h1 class="font-display font-extrabold text-xl sm:text-2xl text-white tracking-tight mt-2 text-center">
+  Powertech Mayorista
+</h1>
 
-    <!-- LOGO GRANDE Y CENTRADO -->
-    <img
-      src="logo.png"
-      alt="Powertech Mayorista"
-      class="h-24 w-24 sm:h-28 sm:w-28 rounded-2xl object-cover ring-2 ring-gold-dark/60 shadow-lg shadow-gold-dark/10"
-      onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 120 120%22%3E%3Crect width=%22120%22 height=%22120%22 rx=%2224%22 fill=%22%23111111%22/%3E%3Ctext x=%2250%25%22 y=%2258%25%22 font-size=%2250%22 fill=%22%23C9A227%22 text-anchor=%22middle%22 font-family=%22Arial%22 font-weight=%22bold%22%3EP%3C/text%3E%3C/svg%3E';">
+<!-- Descripción -->
+<p class="text-xs sm:text-sm text-gray-400 text-center mt-0.5">
+  Venta de accesorios electrónicos por mayor
+</p>
 
-    <!-- Nombre -->
-    <h1 class="font-display font-extrabold text-xl sm:text-2xl text-white tracking-tight mt-2 text-center">
-      Powertech Mayorista
-    </h1>
+</div> <!-- ===================== MENÚ / TABS ===================== --> <nav class="flex max-w-3xl mx-auto px-1 border-t border-gold-dark/20">
+<button onclick="switchTab('catalogo')" id="tabBtnCatalogo"
+  class="tab-underline active flex-1 py-2.5 text-[11px] sm:text-sm font-semibold text-gray-400 transition-colors px-0.5">
+  Catálogo
+</button>
 
-    <!-- Descripción -->
-    <p class="text-xs sm:text-sm text-gray-400 text-center mt-0.5">
-      Venta de accesorios electrónicos por mayor
-    </p>
+<button onclick="switchTab('contacto')" id="tabBtnContacto"
+  class="tab-underline flex-1 py-2.5 text-[11px] sm:text-sm font-semibold text-gray-400 transition-colors px-0.5">
+  Contacto
+</button>
 
-  </div>
+<button onclick="switchTab('nosotros')" id="tabBtnNosotros"
+  class="tab-underline flex-1 py-2.5 text-[11px] sm:text-sm font-semibold text-gray-400 transition-colors px-0.5">
+  Quiénes Somos
+</button>
+
+<button onclick="switchTab('ofertas')" id="tabBtnOfertas"
+  class="tab-underline flex-1 py-2.5 text-[11px] sm:text-sm font-semibold text-gray-400 transition-colors px-0.5">
+  Ofertas
+</button>
+
+</nav> </header> <!-- Spacer para el nuevo header --> <div class="h-[410px] sm:h-[410px]"></div>
 
   <!-- ===================== MENÚ / TABS ===================== -->
   <nav class="flex max-w-3xl mx-auto px-1 border-t border-gold-dark/20">
