@@ -1,0 +1,2524 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>Powertech Mayorista</title>
+
+<meta name="description" content="Powertech Distribuidora Mayorista. Accesorios electrónicos, cargadores, cables, auriculares, tecnología y productos para comercios.">
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        gold: {
+          DEFAULT: '#C9A227',
+          light: '#E0C158',
+          dark: '#8A7018',
+          muted: '#B8952E'
+        }
+      },
+      fontFamily: {
+        display: ['Manrope', 'sans-serif'],
+        body: ['Inter', 'sans-serif']
+      }
+    }
+  }
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --gold:#C9A227;
+  --gold-light:#E0C158;
+  --gold-dark:#8A7018;
+}
+
+*{
+  -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+  background:#000;
+  font-family:'Inter',sans-serif;
+  scroll-behavior:smooth;
+}
+
+h1,h2,h3,.font-display{
+  font-family:'Manrope',sans-serif;
+}
+
+::-webkit-scrollbar{
+  width:6px;
+  height:6px;
+}
+
+::-webkit-scrollbar-track{
+  background:#0a0a0a;
+}
+
+::-webkit-scrollbar-thumb{
+  background:var(--gold-dark);
+  border-radius:10px;
+}
+
+.gold-text{
+  color:var(--gold-light);
+}
+
+.tab-underline{
+  position:relative;
+}
+
+.tab-underline.active{
+  color:var(--gold-light);
+}
+
+.tab-underline.active::after{
+  content:'';
+  position:absolute;
+  left:8%;
+  right:8%;
+  bottom:-1px;
+  height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+
+.fade-in{
+  animation:fadeIn .18s ease-out;
+}
+
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(6px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.slide-up{
+  animation:slideUp .22s cubic-bezier(.16,1,.3,1);
+}
+
+@keyframes slideUp{
+  from{transform:translateY(100%)}
+  to{transform:translateY(0)}
+}
+
+.card-shine{
+  background:linear-gradient(
+    135deg,
+    rgba(201,162,39,.10),
+    rgba(201,162,39,.02)
+  );
+}
+
+.img-placeholder{
+  background:repeating-linear-gradient(
+    135deg,
+    #0d0d0d,
+    #0d0d0d 8px,
+    #111 8px,
+    #111 16px
+  );
+}
+
+.hide-scrollbar::-webkit-scrollbar{
+  display:none;
+}
+
+.hide-scrollbar{
+  scrollbar-width:none;
+}
+
+.product-card{
+  transition:.15s ease;
+}
+
+.product-card:active{
+  transform:scale(.99);
+}
+
+.gallery{
+  display:flex;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  scroll-behavior:smooth;
+}
+
+.gallery > div{
+  flex:0 0 100%;
+  scroll-snap-align:center;
+}
+
+.gallery img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.gallery-dot{
+  transition:.2s;
+}
+
+.gallery-dot.active{
+  background:var(--gold);
+  width:18px;
+}
+
+.qty-btn{
+  transition:.12s;
+}
+
+.qty-btn:active{
+  transform:scale(.88);
+}
+
+.category-chip{
+  transition:.15s;
+}
+
+.category-chip:active{
+  transform:scale(.95);
+}
+</style>
+</head>
+
+<body class="bg-black text-gray-200 min-h-screen pb-24">
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="fixed top-0 left-0 right-0 z-40 bg-black/95 backdrop-blur border-b border-gold-dark/40">
+
+  <div class="relative flex flex-col items-center justify-center px-3 pt-4 pb-3 max-w-3xl mx-auto">
+
+    <button
+      id="cartBtn"
+      onclick="openCart()"
+      class="absolute left-3 top-4 flex items-center gap-1.5 bg-neutral-900 border border-gold-dark/60 rounded-full px-3 py-2">
+
+      <svg class="w-5 h-5 gold-text" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+        <path stroke-linecap="round" stroke-linejoin="round"
+        d="M2.25 3h1.386c.51 0 .955.343 1.087.836l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 1.994-4.693 2.602-7.152.078-.324-.145-.633-.478-.633H5.106M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z"/>
+      </svg>
+
+      <span id="cartCount" class="text-xs font-bold gold-text">0</span>
+    </button>
+
+    <img
+      src="logo.png"
+      alt="Powertech Mayorista"
+      class="h-40 w-40 sm:h-48 sm:w-48 rounded-2xl object-cover ring-2 ring-gold-dark/60 shadow-lg"
+      onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 120 120%22%3E%3Crect width=%22120%22 height=%22120%22 rx=%2224%22 fill=%22%23111111%22/%3E%3Ctext x=%2250%25%22 y=%2258%25%22 font-size=%2250%22 fill=%22%23C9A227%22 text-anchor=%22middle%22 font-family=%22Arial%22 font-weight=%22bold%22%3EP%3C/text%3E%3C/svg%3E';">
+
+    <h1 class="font-display font-extrabold text-xl sm:text-2xl text-white tracking-tight mt-2 text-center">
+      Powertech Mayorista
+    </h1>
+
+    <p class="text-xs sm:text-sm text-gray-400 text-center mt-0.5">
+      Venta de accesorios electrónicos por mayor
+    </p>
+
+  </div>
+
+  <nav class="flex max-w-3xl mx-auto px-1 border-t border-gold-dark/20">
+
+    <button onclick="switchTab('catalogo')" id="tabBtnCatalogo"
+      class="tab-underline active flex-1 py-2.5 text-[11px] sm:text-sm font-semibold text-gray-400">
+      Catálogo
+    </button>
+
+    <button onclick="switchTab('contacto')" id="tabBtnContacto"
+      class="tab-underline flex-1 py-2.5 text-[11px] sm:text-sm font-semibold text-gray-400">
+      Contacto
+    </button>
+
+    <button onclick="switchTab('nosotros')" id="tabBtnNosotros"
+      class="tab-underline flex-1 py-2.5 text-[11px] sm:text-sm font-semibold text-gray-400">
+      Quiénes Somos
+    </button>
+
+    <button onclick="switchTab('ofertas')" id="tabBtnOfertas"
+      class="tab-underline flex-1 py-2.5 text-[11px] sm:text-sm font-semibold text-gray-400">
+      Ofertas
+    </button>
+
+  </nav>
+
+</header>
+
+<div class="h-[300px] sm:h-[320px]"></div>
+
+<!-- =====================================================
+     CATÁLOGO
+===================================================== -->
+
+<main id="tabCatalogo" class="max-w-3xl mx-auto px-3 fade-in">
+
+  <div class="mt-3">
+
+    <p class="text-xs text-gray-500 mb-2">
+      Elegí una categoría
+    </p>
+
+    <div id="categoryChipsRow" class="flex flex-wrap gap-2"></div>
+
+  </div>
+
+  <!-- BUSCADOR -->
+
+  <div class="relative mt-4">
+
+    <svg class="w-4 h-4 text-gray-500 absolute left-3 top-1/2 -translate-y-1/2"
+      fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round"
+      d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+    </svg>
+
+    <input
+      id="searchInput"
+      type="text"
+      placeholder="Buscar producto..."
+      class="w-full bg-neutral-900 border border-gold-dark/40 rounded-xl py-2.5 pl-9 pr-9 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-gold-muted"
+      oninput="onSearchInput()">
+
+    <button
+      id="clearSearchBtn"
+      onclick="clearSearch()"
+      class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-500">
+
+      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round"
+        d="M6 18L18 6M6 6l12 12"/>
+      </svg>
+
+    </button>
+
+  </div>
+
+  <div id="activeFilterChip" class="hidden items-center gap-2 mt-2.5">
+
+    <span class="text-xs text-gray-500">
+      Filtrando por:
+    </span>
+
+    <span
+      id="activeFilterLabel"
+      class="text-xs font-semibold gold-text bg-gold-dark/20 border border-gold-dark/50 rounded-full px-2.5 py-1">
+    </span>
+
+    <button onclick="clearCategory()" class="text-xs text-gray-500 underline">
+      Quitar
+    </button>
+
+  </div>
+
+  <section
+    id="productList"
+    class="mt-4 flex flex-col gap-2 pb-4">
+  </section>
+
+  <p id="noResults" class="hidden text-center text-gray-500 text-sm py-10">
+    No encontramos productos que coincidan con tu búsqueda.
+  </p>
+
+</main>
+
+<!-- =====================================================
+     CONTACTO
+===================================================== -->
+
+<main id="tabContacto" class="max-w-3xl mx-auto px-4 hidden fade-in">
+
+  <div class="mt-4 mb-8">
+
+    <div class="w-12 h-[3px] bg-gradient-to-r from-gold to-transparent rounded-full mb-4"></div>
+
+    <h2 class="font-display font-extrabold text-2xl text-white">
+      Hablemos
+    </h2>
+
+    <p class="text-gray-400 text-sm mb-6">
+      Estamos para ayudarte con tu pedido mayorista
+    </p>
+
+    <a
+      href="https://wa.me/5491171388777?text=Hola%20Powertech%2C%20quiero%20hacer%20una%20consulta."
+      target="_blank"
+      class="flex items-center gap-3 bg-neutral-900 border border-gold-dark/40 rounded-xl p-4">
+
+      <div class="w-11 h-11 rounded-full bg-[#25D366] flex items-center justify-center">
+        <span class="text-white font-bold text-xl">W</span>
+      </div>
+
+      <div>
+        <p class="text-sm font-semibold text-white">
+          WhatsApp
+        </p>
+
+        <p class="text-xs text-gray-400">
+          Pedidos y consultas
+        </p>
+      </div>
+
+    </a>
+
+    <div class="flex items-center gap-3 bg-neutral-900 border border-gold-dark/40 rounded-xl p-4 mt-3">
+
+      <div class="w-11 h-11 rounded-full bg-neutral-800 flex items-center justify-center">
+        <span class="gold-text text-lg">⌖</span>
+      </div>
+
+      <div>
+        <p class="text-sm font-semibold text-white">
+          Zona de cobertura
+        </p>
+
+        <p class="text-xs text-gray-400">
+          Zona Sur del Gran Buenos Aires y envíos a todo el país
+        </p>
+      </div>
+
+    </div>
+
+    <a
+      href="https://wa.me/5491171388777?text=Hola%20Powertech%2C%20quiero%20hacer%20una%20consulta."
+      class="mt-6 w-full bg-[#25D366] text-white font-bold py-3.5 rounded-xl flex items-center justify-center gap-2">
+
+      Escribirnos por WhatsApp
+
+    </a>
+
+  </div>
+
+</main>
+
+<!-- =====================================================
+     QUIÉNES SOMOS
+===================================================== -->
+
+<main id="tabNosotros" class="max-w-3xl mx-auto px-4 hidden fade-in">
+
+  <div class="mt-4 mb-8">
+
+    <div class="w-12 h-[3px] bg-gradient-to-r from-gold to-transparent rounded-full mb-4"></div>
+
+    <h2 class="font-display font-extrabold text-2xl text-white leading-tight">
+      10 años potenciando
+      <br>
+      <span class="gold-text">
+        al comercio de Zona Sur
+      </span>
+    </h2>
+
+    <p class="text-gray-400 text-sm mb-6">
+      Powertech Distribuidora Mayorista
+    </p>
+
+    <div class="space-y-4 text-[15px] leading-relaxed text-gray-300">
+
+      <p>
+        Desde hace más de una década, en
+        <span class="gold-text font-semibold">Powertech</span>
+        acompañamos a kioscos, almacenes y maxikioscos con productos de alta rotación.
+      </p>
+
+      <p>
+        Nos especializamos en cargadores, cables, auriculares, tecnología y accesorios pensados para la reventa.
+      </p>
+
+      <p>
+        Trabajamos con stock permanente y atención personalizada para que puedas abastecer tu comercio de manera simple.
+      </p>
+
+      <p>
+        Realizamos envíos en Zona Sur y despachos a todo el país.
+      </p>
+
+    </div>
+
+    <div class="grid grid-cols-3 gap-2.5 mt-7">
+
+      <div class="border border-gold-dark/40 rounded-xl p-3 text-center">
+        <p class="font-display font-extrabold text-xl gold-text">
+          +10
+        </p>
+        <p class="text-[11px] text-gray-400">
+          Años en el rubro
+        </p>
+      </div>
+
+      <div class="border border-gold-dark/40 rounded-xl p-3 text-center">
+        <p class="font-display font-extrabold text-xl gold-text">
+          Zona Sur
+        </p>
+        <p class="text-[11px] text-gray-400">
+          Cobertura local
+        </p>
+      </div>
+
+      <div class="border border-gold-dark/40 rounded-xl p-3 text-center">
+        <p class="font-display font-extrabold text-xl gold-text">
+          País
+        </p>
+        <p class="text-[11px] text-gray-400">
+          Envíos nacionales
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+</main>
+
+<!-- =====================================================
+     OFERTAS
+===================================================== -->
+
+<main id="tabOfertas" class="max-w-3xl mx-auto px-4 hidden fade-in">
+
+  <div class="mt-4 mb-8">
+
+    <div class="w-12 h-[3px] bg-gradient-to-r from-gold to-transparent rounded-full mb-4"></div>
+
+    <h2 class="font-display font-extrabold text-2xl text-white">
+      Combos y <span class="gold-text">Ofertas</span>
+    </h2>
+
+    <p class="text-gray-400 text-sm mb-6">
+      Las mejores oportunidades para tu mostrador
+    </p>
+
+    <div class="card-shine border border-gold-dark/40 rounded-2xl p-5">
+
+      <p class="text-sm text-gray-300 leading-relaxed">
+        Consultá por combos, promociones y productos de alta rotación disponibles.
+      </p>
+
+      <button
+        onclick="goToOffersCategory()"
+        class="w-full mt-5 bg-gold-muted text-black font-bold py-3 rounded-xl">
+
+        Ver Combos y Oferta
+
+      </button>
+
+      <a
+        href="https://wa.me/5491171388777?text=Hola%20Powertech%2C%20quiero%20consultar%20por%20los%20combos%20y%20ofertas."
+        class="w-full mt-3 border border-gold-dark/50 text-white font-semibold py-3 rounded-xl flex items-center justify-center">
+
+        Consultar por WhatsApp
+
+      </a>
+
+    </div>
+
+  </div>
+
+</main>
+
+<!-- =====================================================
+     MODAL PRODUCTO
+===================================================== -->
+
+<div
+  id="productModal"
+  class="hidden fixed inset-0 z-50 items-end sm:items-center justify-center">
+
+  <div
+    class="absolute inset-0 bg-black/85 backdrop-blur-sm"
+    onclick="closeProductModal()">
+  </div>
+
+  <div
+    class="relative bg-neutral-950 border border-gold-dark/50 w-full sm:max-w-md sm:rounded-2xl rounded-t-2xl max-h-[92vh] overflow-y-auto slide-up">
+
+    <div class="sticky top-0 bg-neutral-950/95 backdrop-blur flex justify-end p-2 border-b border-gold-dark/20 z-20">
+
+      <button
+        onclick="closeProductModal()"
+        class="text-gray-300 p-2">
+
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round"
+          d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+
+      </button>
+
+    </div>
+
+    <div class="p-4 pt-1">
+
+      <!-- GALERÍA -->
+
+      <div
+        id="modalGallery"
+        class="gallery hide-scrollbar w-full h-64 rounded-xl overflow-hidden img-placeholder">
+      </div>
+
+      <div
+        id="galleryDots"
+        class="flex justify-center items-center gap-1.5 mt-2 mb-4">
+      </div>
+
+      <span
+        id="modalCategory"
+        class="text-[10px] uppercase tracking-wider font-bold gold-text bg-gold-dark/20 border border-gold-dark/40 rounded-full px-2.5 py-1">
+      </span>
+
+      <h3
+        id="modalTitle"
+        class="font-display font-extrabold text-xl text-white mt-2.5 leading-snug">
+      </h3>
+
+      <p
+        id="modalPrice"
+        class="font-display font-extrabold text-2xl gold-text mt-1">
+      </p>
+
+      <p
+        id="modalDesc"
+        class="text-sm text-gray-300 leading-relaxed mt-3">
+      </p>
+
+      <h4 class="text-xs font-bold uppercase tracking-wider text-gray-400 mt-5 mb-2">
+        Características
+      </h4>
+
+      <ul
+        id="modalSpecs"
+        class="space-y-1.5">
+      </ul>
+
+      <button
+        id="modalAddBtn"
+        onclick="addFromModal()"
+        class="w-full mt-5 bg-gold-muted text-black font-bold py-3 rounded-xl">
+
+        Agregar al pedido
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- =====================================================
+     CARRITO
+===================================================== -->
+
+<div
+  id="cartModal"
+  class="hidden fixed inset-0 z-50 items-end sm:items-center justify-center">
+
+  <div
+    class="absolute inset-0 bg-black/80 backdrop-blur-sm"
+    onclick="closeCart()">
+  </div>
+
+  <div
+    class="relative bg-neutral-950 border border-gold-dark/50 w-full sm:max-w-md sm:rounded-2xl rounded-t-2xl max-h-[90vh] flex flex-col slide-up">
+
+    <div class="flex items-center justify-between p-4 border-b border-gold-dark/30">
+
+      <h3 class="font-display font-extrabold text-lg text-white">
+        Tu pedido
+      </h3>
+
+      <button onclick="closeCart()" class="text-gray-300 p-1">
+
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round"
+          d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+
+      </button>
+
+    </div>
+
+    <div
+      id="cartItems"
+      class="flex-1 overflow-y-auto p-4 space-y-3">
+    </div>
+
+    <p
+      id="cartEmptyMsg"
+      class="hidden text-center text-gray-400 text-sm py-10 px-4">
+
+      Todavía no agregaste productos.
+
+    </p>
+
+    <div class="border-t border-gold-dark/30 p-4 space-y-3">
+
+      <div class="flex justify-between items-center">
+
+        <span class="text-sm text-gray-400">
+          Total
+        </span>
+
+        <span
+          id="cartTotal"
+          class="font-display font-extrabold text-xl gold-text">
+          $0
+        </span>
+
+      </div>
+
+      <div
+        id="minPurchaseWarning"
+        class="hidden bg-gold-dark/10 border border-gold-dark/40 rounded-lg px-3 py-2">
+
+        <p class="text-xs text-gray-300">
+          Compra mínima
+          <span class="gold-text font-semibold">$50.000</span>.
+          Te faltan
+          <span id="missingAmount" class="text-white font-bold">
+            $0
+          </span>.
+        </p>
+
+      </div>
+
+      <button
+        id="checkoutBtn"
+        onclick="sendOrder()"
+        disabled
+        class="w-full py-3.5 rounded-xl font-bold text-sm bg-neutral-800 text-gray-400 cursor-not-allowed">
+
+        Finalizar pedido por WhatsApp
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- =====================================================
+     WHATSAPP
+===================================================== -->
+
+<a
+  href="https://wa.me/5491171388777?text=Hola%20Powertech%2C%20quisiera%20hacer%20una%20consulta."
+  target="_blank"
+  class="fixed bottom-5 right-5 z-30 bg-[#25D366] w-14 h-14 rounded-full flex items-center justify-center shadow-lg">
+
+  <span class="text-white font-bold text-xl">
+    W
+  </span>
+
+</a>
+
+<div
+  id="toast"
+  class="hidden fixed bottom-24 left-1/2 -translate-x-1/2 bg-gold-muted text-black text-sm font-semibold px-4 py-2.5 rounded-full shadow-lg z-50 whitespace-nowrap">
+</div>
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+/* =====================================================
+   CATEGORÍAS
+===================================================== */
+
+const categories = [
+  {key:'cargadores',label:'Cargadores'},
+  {key:'cables',label:'Cables'},
+  {key:'auriculares',label:'Auriculares'},
+  {key:'tecnologia',label:'Tecnología'},
+  {key:'hogar',label:'Hogar y Cuidado'},
+  {key:'perfumes',label:'Perfumes'},
+  {key:'chips-sube',label:'Chips y SUBE'},
+  {key:'combos-oferta',label:'Combos y Oferta'},
+  {key:'otros',label:'Otros'}
+];
+
+
+/* =====================================================
+   PRODUCTOS
+===================================================== */
+
+const products = [
+
+/* 1 */
+{
+ id:1,
+ name:"Cargador Samsung",
+ title:"Cargador Samsung",
+ price:6800,
+ category:"cargadores",
+ categoryLabel:"Cargadores",
+ images:[1],
+ desc:"Cargador Samsung para carga diaria de dispositivos compatibles. Una opción práctica y de buena rotación para comercios.",
+ specs:["Cargador de pared","Compatible con dispositivos Samsung compatibles","Ideal para uso diario","Producto de alta rotación"]
+},
+
+/* 2 */
+{
+ id:2,
+ name:"Auriculares P47",
+ title:"Auriculares P47 Vincha Bluetooth",
+ price:6800,
+ category:"auriculares",
+ categoryLabel:"Auriculares",
+ images:[34,74,2],
+ desc:"Auriculares P47 tipo vincha con diseño plegable. Una opción económica y atractiva para quienes buscan audio inalámbrico y comodidad.",
+ specs:["Conectividad Bluetooth","Diseño tipo vincha","Diseño plegable","Ideales para música y llamadas"]
+},
+
+/* 3 */
+{
+ id:3,
+ name:"Cargador Auto",
+ title:"Cargador Auto",
+ price:4800,
+ category:"cargadores",
+ categoryLabel:"Cargadores",
+ images:[3],
+ desc:"Cargador vehicular práctico para mantener tus dispositivos cargados durante los viajes.",
+ specs:["Uso vehicular","Conexión para toma de 12V","Diseño compacto","Ideal para auto"]
+},
+
+/* 4 */
+{
+ id:4,
+ name:"Auriculares E6S",
+ title:"Auriculares E6S",
+ price:7800,
+ category:"auriculares",
+ categoryLabel:"Auriculares",
+ images:[4],
+ desc:"Auriculares Bluetooth E6S de diseño compacto, ideales para escuchar música, realizar llamadas y llevar todos los días.",
+ specs:["Conectividad Bluetooth","Diseño compacto","Micrófono integrado","Uso diario"]
+},
+
+/* 5 */
+{
+ id:5,
+ name:"Auriculares Cable JBL",
+ title:"Auriculares con Cable JBL",
+ price:2500,
+ category:"auriculares",
+ categoryLabel:"Auriculares",
+ images:[5],
+ desc:"Auriculares con cable de formato práctico para uso cotidiano. Una alternativa económica y de excelente rotación.",
+ specs:["Conexión por cable","Formato compacto","Ideales para uso diario","Precio mayorista"]
+},
+
+/* 7 */
+{
+ id:7,
+ name:"Secador de Pelo",
+ title:"Secador de Pelo",
+ price:17000,
+ category:"hogar",
+ categoryLabel:"Hogar",
+ images:[7],
+ desc:"Secador de pelo práctico para uso doméstico. Diseño pensado para facilitar el secado y peinado diario.",
+ specs:["Uso doméstico","Diseño práctico","Cómodo de utilizar","Ideal para reventa"]
+},
+
+/* 8 */
+{
+ id:8,
+ name:"Joystick PS4",
+ title:"Joystick Compatible PS4",
+ price:34000,
+ category:"tecnologia",
+ categoryLabel:"Tecnología",
+ images:[8],
+ desc:"Joystick para PlayStation 4, ideal para reemplazo o para sumar un segundo control a la consola.",
+ specs:["Compatible con PS4","Diseño tipo joystick","Controles completos","Ideal para gaming"]
+},
+
+/* 9 */
+{
+ id:9,
+ name:"Auriculares X100",
+ title:"Auriculares Económicos X100",
+ price:null,
+ category:"auriculares",
+ categoryLabel:"Auriculares",
+ images:[9],
+ desc:"Auriculares económicos X100. Una alternativa de entrada para ofrecer un producto accesible y de buena rotación.",
+ specs:["Modelo X100","Precio a consultar","Ideal para reventa","Producto económico"]
+},
+
+/* 10 */
+{
+ id:10,
+ name:"Cargador Royalcell 2.1",
+ title:"Cargador Royalcell 2.1A",
+ price:4300,
+ category:"cargadores",
+ categoryLabel:"Cargadores",
+ images:[10,98],
+ desc:"Cargador Royalcell de 2.1A para carga cotidiana de dispositivos compatibles. Compacto y práctico para exhibición en mostrador.",
+ specs:["Salida 2.1A","Marca Royalcell","Diseño compacto","Ideal para uso diario"]
+},
+
+/* 11 */
+{
+ id:11,
+ name:"Chip Movistar",
+ title:"Chip Movistar",
+ price:1000,
+ category:"chips-sube",
+ categoryLabel:"Chips y SUBE",
+ images:[11],
+ desc:"Chip Movistar para líneas móviles compatibles. Consultá disponibilidad y condiciones de activación al realizar el pedido.",
+ specs:["Operador Movistar","Precio mayorista","Consultar activación","Producto de alta rotación"]
+},
+
+/* 14 */
+{
+ id:14,
+ name:"Auriculares BT P9",
+ title:"Auriculares Bluetooth P9",
+ price:7800,
+ category:"auriculares",
+ categoryLabel:"Auriculares",
+ images:[14,26],
+ desc:"Auriculares Bluetooth P9 de diseño compacto para música, llamadas y uso diario.",
+ specs:["Bluetooth","Micrófono integrado","Diseño compacto","Uso diario"]
+},
+
+/* 15 */
+{
+ id:15,
+ name:"Cartel LED Kiosco",
+ title:"Cartel LED para Kiosco",
+ price:19000,
+ category:"otros",
+ categoryLabel:"Otros",
+ images:[102,15],
+ desc:"Cartel LED pensado para destacar el comercio y llamar la atención desde el exterior o mostrador.",
+ specs:["Iluminación LED","Ideal para kioscos y comercios","Alta visibilidad","Producto para exhibición"]
+},
+
+/* 16 */
+{
+ id:16,
+ name:"Planchita Legatus",
+ title:"Planchita de Pelo Legatus",
+ price:18000,
+ category:"hogar",
+ categoryLabel:"Hogar",
+ images:[16],
+ desc:"Planchita de pelo Legatus para alisado y peinado cotidiano.",
+ specs:["Marca Legatus","Uso doméstico","Diseño práctico","Ideal para reventa"]
+},
+
+/* 17 */
+{
+ id:17,
+ name:"Proyector Astronauta",
+ title:"Proyector Astronauta",
+ price:19000,
+ category:"tecnologia",
+ categoryLabel:"Tecnología",
+ images:[17],
+ desc:"Proyector decorativo con diseño de astronauta, ideal para crear efectos de luz y ambientación en habitaciones.",
+ specs:["Diseño astronauta","Proyección decorativa","Ideal para dormitorios","Producto atractivo para regalo"]
+},
+
+/* 18 */
+{
+ id:18,
+ name:"Cable C a C Promax",
+ title:"Cable USB-C a USB-C Promax",
+ price:3200,
+ category:"cables",
+ categoryLabel:"Cables",
+ images:[18],
+ desc:"Cable Promax USB-C a USB-C para carga y conexión de dispositivos compatibles.",
+ specs:["USB-C a USB-C","Marca Promax","Diseño práctico","Ideal para carga"]
+},
+
+/* 19 */
+{
+ id:19,
+ name:"Smartwatch Ultra 9",
+ title:"Smartwatch Ultra 9",
+ price:19000,
+ category:"tecnologia",
+ categoryLabel:"Tecnología",
+ images:[19],
+ desc:"Smartwatch Ultra 9 con diseño moderno tipo reloj inteligente. Una opción atractiva para sumar tecnología a tu catálogo.",
+ specs:["Diseño tipo Ultra","Pantalla inteligente","Funciones múltiples","Ideal para uso diario"]
+},
+
+/* 20 */
+{
+ id:20,
+ name:"Cargador Fetus Tipo C",
+ title:"Cargador Fetus Tipo C",
+ price:4800,
+ category:"cargadores",
+ categoryLabel:"Cargadores",
+ images:[20,40,44,72],
+ desc:"Cargador Fetus con conexión Tipo C, pensado para carga diaria de dispositivos compatibles.",
+ specs:["Conexión Tipo C","Marca Fetus","Diseño compacto","Ideal para reventa"]
+},
+
+/* 21 */
+{
+ id:21,
+ name:"Cargador Otawa",
+ title:"Cargador Otawa",
+ price:3500,
+ category:"cargadores",
+ categoryLabel:"Cargadores",
+ images:[21,29,77],
+ desc:"Cargador Otawa económico y práctico para carga cotidiana.",
+ specs:["Marca Otawa","Diseño compacto","Uso diario","Precio mayorista"]
+},
+
+/* 22 */
+{
+ id:22,
+ name:"Pastillera Legatus",
+ title:"Pastillera Legatus con Accesorios",
+ price:14900,
+ category:"hogar",
+ categoryLabel:"Hogar",
+ images:[58,54,22],
+ desc:"Pastillera Legatus con accesorios, práctica para organizar medicamentos y elementos personales.",
+ specs:["Marca Legatus","Incluye accesorios","Diseño práctico","Ideal para organización"]
+},
+
+/* 23 */
+{
+ id:23,
+ name:"Cable C Motorola",
+ title:"Cable USB-C Motorola",
+ price:2000,
+ category:"cables",
+ categoryLabel:"Cables",
+ images:[23],
+ desc:"Cable Tipo C compatible con dispositivos Motorola y otros equipos que utilizan esta conexión.",
+ specs:["Conector USB-C","Compatible con dispositivos compatibles","Ideal para carga","Precio mayorista"]
+},
+
+/* 24 */
+{
+ id:24,
+ name:"Auriculares P9 Pro Max",
+ title:"Auriculares P9 Pro Max",
+ price:9900,
+ category:"auriculares",
+ categoryLabel:"Auriculares",
+ images:[24],
+ desc:"Auriculares P9 Pro Max de diseño moderno, pensados para disfrutar música y realizar llamadas.",
+ specs:["Conectividad inalámbrica","Micrófono","Diseño moderno","Uso diario"]
+},
+
+/* 28 */
+{
+ id:28,
+ name:"Zapatilla 2 Metros USB",
+ title:"Zapatilla Eléctrica 2 Metros con USB",
+ price:10900,
+ category:"hogar",
+ categoryLabel:"Hogar",
+ images:[28],
+ desc:"Zapatilla eléctrica de 2 metros con puertos USB, práctica para cargar varios dispositivos y extender conexiones.",
+ specs:["Cable de 2 metros","Puertos USB","Uso doméstico","Ideal para escritorio y hogar"]
+},
+
+/* 30 */
+{
+ id:30,
+ name:"Powerbank",
+ title:"Powerbank Portátil",
+ price:16000,
+ category:"tecnologia",
+ categoryLabel:"Tecnología",
+ images:[30],
+ desc:"Batería portátil para recargar dispositivos cuando no hay un enchufe disponible.",
+ specs:["Batería portátil","Diseño compacto","Ideal para viajes","Carga de dispositivos compatibles"]
+},
+
+/* 32 */
+{
+ id:32,
+ name:"Cargador iPhone C a C",
+ title:"Cargador iPhone USB-C a USB-C",
+ price:10200,
+ category:"cargadores",
+ categoryLabel:"Cargadores",
+ images:[45,69,95,99,32],
+ desc:"Cargador para dispositivos Apple compatibles con conexión USB-C, acompañado por cable USB-C a USB-C según presentación.",
+ specs:["USB-C a USB-C","Compatible con dispositivos Apple compatibles","Carga práctica","Ideal para reventa"]
+},
+
+/* 33 */
+{
+ id:33,
+ name:"Auriculares M20",
+ title:"Auriculares Bluetooth M20",
+ price:8800,
+ category:"auriculares",
+ categoryLabel:"Auriculares",
+ images:[33,80],
+ desc:"Auriculares Bluetooth M20 con diseño compacto y moderno.",
+ specs:["Bluetooth","Diseño compacto","Micrófono integrado","Uso diario"]
+},
+
+/* 35 */
+{
+ id:35,
+ name:"Smartwatch F60",
+ title:"Smartwatch F60",
+ price:23000,
+ category:"tecnologia",
+ categoryLabel:"Tecnología",
+ images:[35],
+ desc:"Smartwatch F60 con diseño moderno y funciones inteligentes para acompañar el uso diario.",
+ specs:["Modelo F60","Pantalla inteligente","Funciones múltiples","Diseño moderno"]
+},
+
+/* 36 */
+{
+ id:36,
+ name:"Cargador iPhone Lightning",
+ title:"Cargador iPhone Lightning",
+ price:10800,
+ category:"cargadores",
+ categoryLabel:"Cargadores",
+ images:[36,68,78],
+ desc:"Cargador para dispositivos Apple que utilizan conexión Lightning.",
+ specs:["Conector Lightning","Compatible con dispositivos compatibles","Carga diaria","Ideal para reventa"]
+},
+
+/* 37 */
+{
+ id:37,
+ name:"IP Cam Noga",
+ title:"Cámara IP Noga",
+ price:13900,
+ category:"tecnologia",
+ categoryLabel:"Tecnología",
+ images:[37],
+ desc:"Cámara IP Noga para monitoreo y vigilancia de espacios mediante conexión de red compatible.",
+ specs:["Marca Noga","Cámara IP","Monitoreo remoto según configuración","Ideal para hogar y comercio"]
+},
+
+/* 38 */
+{
+ id:38,
+ name:"Proyector con Joysticks",
+ title:"Proyector con Joysticks y Android",
+ price:160000,
+ category:"tecnologia",
+ categoryLabel:"Tecnología",
+ images:[38],
+ desc:"Proyector multimedia con sistema Android y joysticks, pensado para entretenimiento, películas y videojuegos.",
+ specs:["Sistema Android","Incluye joysticks","Proyección multimedia","Ideal para entretenimiento"]
+},
+
+/* 39 */
+{
+ id:39,
+ name:"Crema Karsell",
+ title:"Crema Karsell",
+ price:20000,
+ category:"hogar",
+ categoryLabel:"Hogar",
+ images:[39],
+ desc:"Producto Karsell para cuidado personal. Presentación ideal para comercialización y reventa.",
+ specs:["Marca Karsell","Cuidado personal","Presentación comercial","Consultar disponibilidad"]
+},
+
+/* 41 */
+{
+ id:41,
+ name:"Auriculares Cable Samsung",
+ title:"Auriculares con Cable Samsung Blancos",
+ price:2000,
+ category:"auriculares",
+ categoryLabel:"Auriculares",
+ images:[41],
+ desc:"Auriculares blancos con cable, una opción económica para uso cotidiano.",
+ specs:["Con cable","Color blanco","Formato compacto","Precio mayorista"]
+},
+
+/* 42 */
+{
+ id:42,
+ name:"Luminarias LED",
+ title:"Luminarias LED",
+ price:19000,
+ category:"hogar",
+ categoryLabel:"Hogar",
+ images:[42],
+ desc:"Luminarias LED para iluminación práctica y eficiente de distintos espacios.",
+ specs:["Tecnología LED","Iluminación","Uso doméstico o comercial","Ideal para reventa"]
+},
+
+/* 43 */
+{
+ id:43,
+ name:"Cable CPP20",
+ title:"Cable CPP20",
+ price:null,
+ category:"cables",
+ categoryLabel:"Cables",
+ images:[43],
+ desc:"Cable modelo CPP20. Consultá precio y disponibilidad.",
+ specs:["Modelo CPP20","Precio a consultar","Producto de conectividad","Consultar disponibilidad"]
+},
+
+/* 47 */
+{
+ id:47,
+ name:"Auriculares ExtraBass",
+ title:"Auriculares ExtraBass",
+ price:7800,
+ category:"auriculares",
+ categoryLabel:"Auriculares",
+ images:[47],
+ desc:"Auriculares ExtraBass pensados para quienes buscan una experiencia de audio con mayor presencia de graves.",
+ specs:["Sistema ExtraBass","Uso diario","Diseño práctico","Ideal para música"]
+},
+
+/* 48 */
+{
+ id:48,
+ name:"Auriculares M10",
+ title:"Auriculares Bluetooth M10",
+ price:7800,
+ category:"auriculares",
+ categoryLabel:"Auriculares",
+ images:[48,49,50,81],
+ desc:"Auriculares Bluetooth M10 de diseño compacto y práctico para música y llamadas.",
+ specs:["Modelo M10","Bluetooth","Micrófono","Uso diario"]
+},
+
+/* 51 */
+{
+ id:51,
+ name:"Soporte para Moto",
+ title:"Soporte para Moto",
+ price:9600,
+ category:"otros",
+ categoryLabel:"Otros",
+ images:[51,86],
+ desc:"Soporte para moto pensado para sujetar dispositivos durante los desplazamientos.",
+ specs:["Uso en moto","Sujeción para dispositivo","Diseño práctico","Ideal para repartidores y motociclistas"]
+},
+
+/* 55 */
+{
+ id:55,
+ name:"Planchita Legatus",
+ title:"Planchita de Pelo Legatus",
+ price:20000,
+ category:"hogar",
+ categoryLabel:"Hogar",
+ images:[55],
+ desc:"Planchita de pelo Legatus para alisado y peinado.",
+ specs:["Marca Legatus","Uso doméstico","Diseño práctico","Ideal para reventa"]
+},
+
+/* 56 */
+{
+ id:56,
+ name:"Zapatilla USB",
+ title:"Zapatilla Eléctrica con USB",
+ price:18000,
+ category:"hogar",
+ categoryLabel:"Hogar",
+ images:[56],
+ desc:"Zapatilla eléctrica con puertos USB para conectar equipos y cargar dispositivos.",
+ specs:["Puertos USB","Uso doméstico","Varias conexiones","Ideal para hogar y oficina"]
+},
+
+/* 57 */
+{
+ id:57,
+ name:"Auriculares Orejitas",
+ title:"Auriculares con Orejitas",
+ price:7800,
+ category:"auriculares",
+ categoryLabel:"Auriculares",
+ images:[67,57],
+ desc:"Auriculares con diseño de orejitas, una opción llamativa y atractiva para regalar o sumar al mostrador.",
+ specs:["Diseño con orejitas","Conectividad inalámbrica según modelo","Diseño llamativo","Ideal para regalo"]
+},
+
+/* 59 */
+{
+ id:59,
+ name:"Cargador Hitoshy",
+ title:"Cargador Hitoshy",
+ price:2600,
+ category:"cargadores",
+ categoryLabel:"Cargadores",
+ images:[94,59],
+ desc:"Cargador Hitoshy económico para carga cotidiana de dispositivos compatibles.",
+ specs:["Marca Hitoshy","Diseño compacto","Uso diario","Precio mayorista"]
+},
+
+/* 60 */
+{
+ id:60,
+ name:"Masajeador Facial",
+ title:"Masajeador Facial",
+ price:27000,
+ category:"hogar",
+ categoryLabel:"Hogar",
+ images:[60],
+ desc:"Masajeador facial pensado para complementar rutinas de cuidado personal.",
+ specs:["Uso facial","Cuidado personal","Diseño práctico","Ideal para reventa"]
+},
+
+/* 61 */
+{
+ id:61,
+ name:"JBL Tune 700",
+ title:"Auriculares JBL Tune 700",
+ price:26000,
+ category:"auriculares",
+ categoryLabel:"Auriculares",
+ images:[89,91,97,61],
+ desc:"Auriculares JBL Tune 700 de formato vincha, pensados para disfrutar música y contenido multimedia con comodidad.",
+ specs:["Marca JBL","Modelo Tune 700","Formato vincha","Ideal para música"]
+},
+
+/* 62 */
+{
+ id:62,
+ name:"AirPods",
+ title:"AirPods",
+ price:23000,
+ category:"auriculares",
+ categoryLabel:"Auriculares",
+ images:[62],
+ desc:"Auriculares tipo AirPods con estuche de carga, ideales para uso diario y llamadas.",
+ specs:["Formato True Wireless","Estuche de carga","Conectividad inalámbrica","Ideal para uso diario"]
+},
+
+/* 63 */
+{
+ id:63,
+ name:"Smartwatch H900",
+ title:"Smartwatch H900",
+ price:25000,
+ category:"tecnologia",
+ categoryLabel:"Tecnología",
+ images:[63],
+ desc:"Smartwatch H900 con diseño moderno y funciones inteligentes para el uso diario.",
+ specs:["Modelo H900","Pantalla inteligente","Funciones múltiples","Diseño moderno"]
+},
+
+/* 64 */
+{
+ id:64,
+ name:"Cargador Royalcell iPhone",
+ title:"Cargador Royalcell para iPhone",
+ price:8800,
+ category:"cargadores",
+ categoryLabel:"Cargadores",
+ images:[104,64,73],
+ desc:"Cargador Royalcell para dispositivos iPhone compatibles, práctico para uso diario.",
+ specs:["Marca Royalcell","Compatible con iPhone según conexión","Diseño compacto","Ideal para reventa"]
+},
+
+/* 65 */
+{
+ id:65,
+ name:"Chip Personal",
+ title:"Chip Personal",
+ price:1000,
+ category:"chips-sube",
+ categoryLabel:"Chips y SUBE",
+ images:[65,70],
+ desc:"Chip Personal para líneas móviles compatibles. Consultá disponibilidad y condiciones de activación.",
+ specs:["Operador Personal","Precio mayorista","Consultar activación","Producto de alta rotación"]
+},
+
+/* 66 */
+{
+ id:66,
+ name:"Cable Lightning",
+ title:"Cable Lightning",
+ price:2900,
+ category:"cables",
+ categoryLabel:"Cables",
+ images:[66,90,70],
+ desc:"Cable Lightning para carga y conexión de dispositivos compatibles.",
+ specs:["Conector Lightning","Ideal para carga","Diseño práctico","Precio mayorista"]
+},
+
+/* 71 */
+{
+ id:71,
+ name:"Auriculares Open Ear",
+ title:"Auriculares Open Ear",
+ price:7800,
+ category:"auriculares",
+ categoryLabel:"Auriculares",
+ images:[71],
+ desc:"Auriculares de formato Open Ear, diseñados para escuchar audio manteniendo una mayor percepción del entorno.",
+ specs:["Diseño Open Ear","Conectividad inalámbrica","Uso diario","Diseño moderno"]
+},
+
+/* 75 */
+{
+ id:75,
+ name:"Calculadora",
+ title:"Calculadora de Números Grandes",
+ price:9000,
+ category:"otros",
+ categoryLabel:"Otros",
+ images:[75],
+ desc:"Calculadora con números grandes, práctica para comercios, oficinas, hogares y personas que buscan una lectura sencilla.",
+ specs:["Números grandes","Lectura sencilla","Uso comercial y doméstico","Diseño práctico"]
+},
+
+/* 76 */
+{
+ id:76,
+ name:"Planchita",
+ title:"Planchita de Pelo",
+ price:14000,
+ category:"hogar",
+ categoryLabel:"Hogar",
+ images:[76],
+ desc:"Planchita de pelo práctica para alisar y peinar.",
+ specs:["Uso doméstico","Diseño compacto","Ideal para peinado","Producto para reventa"]
+},
+
+/* 83 */
+{
+ id:83,
+ name:"Cable Motorola",
+ title:"Cable Motorola USB-C",
+ price:2000,
+ category:"cables",
+ categoryLabel:"Cables",
+ images:[83],
+ desc:"Cable Motorola con conexión Tipo C para carga de dispositivos compatibles.",
+ specs:["USB-C","Compatible con dispositivos compatibles","Ideal para carga","Precio mayorista"]
+},
+
+/* 87 */
+{
+ id:87,
+ name:"Odyssey Mandarín",
+ title:"Odyssey Mandarín",
+ price:78000,
+ category:"perfumes",
+ categoryLabel:"Perfumes",
+ images:[87],
+ desc:"Odyssey Mandarín, fragancia de presentación atractiva para sumar a la sección de perfumes y cuidado personal.",
+ specs:["Fragancia Odyssey","Presentación comercial","Ideal para reventa","Consultar disponibilidad"]
+},
+
+/* 92 */
+{
+ id:92,
+ name:"Grooming 3 en 1",
+ title:"Grooming 3 en 1",
+ price:null,
+ category:"hogar",
+ categoryLabel:"Hogar",
+ images:[92],
+ desc:"Kit Grooming 3 en 1 para cuidado personal. Precio a consultar.",
+ specs:["3 funciones","Cuidado personal","Diseño práctico","Precio a consultar"]
+},
+
+/* 93 */
+{
+ id:93,
+ name:"Masajeador Facial",
+ title:"Masajeador Facial",
+ price:null,
+ category:"hogar",
+ categoryLabel:"Hogar",
+ images:[93],
+ desc:"Masajeador facial para rutinas de cuidado personal. Precio a consultar.",
+ specs:["Uso facial","Cuidado personal","Diseño práctico","Precio a consultar"]
+},
+
+/* 96 */
+{
+ id:96,
+ name:"Smartwatch H900",
+ title:"Smartwatch H900",
+ price:null,
+ category:"tecnologia",
+ categoryLabel:"Tecnología",
+ images:[96],
+ desc:"Smartwatch H900 con diseño moderno y funciones inteligentes. Consultá el precio y disponibilidad.",
+ specs:["Modelo H900","Funciones inteligentes","Precio a consultar","Consultar disponibilidad"]
+},
+
+/* 102 ya está asociado al 15 */
+
+/* 94 y 59 ya asociados */
+
+/* 98 ya asociado */
+
+/* 104 ya asociado */
+
+];
+
+
+/* =====================================================
+   UTILIDADES
+===================================================== */
+
+const MIN_PURCHASE = 50000;
+const WHATSAPP_NUMBER = "5491171388777";
+
+let cart = JSON.parse(localStorage.getItem('powertech_cart') || '{}');
+let activeCategory = null;
+let currentModalProduct = null;
+
+function money(n){
+
+  if(n === null || n === undefined){
+    return "Consultar";
+  }
+
+  return '$' + Number(n).toLocaleString('es-AR');
+
+}
+
+function imageName(num){
+  return `prod${num}.jpg`;
+}
+
+function placeholderSVG(){
+
+  return 'data:image/svg+xml;utf8,' +
+    encodeURIComponent(`
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+        <rect width="100" height="100" fill="#0d0d0d"/>
+        <path d="M30 65 L45 45 L55 55 L70 35 L75 65 Z" fill="#2a2210"/>
+        <circle cx="40" cy="38" r="6" fill="#2a2210"/>
+      </svg>
+    `);
+
+}
+
+
+/* =====================================================
+   RENDER PRODUCTOS
+===================================================== */
+
+function renderProducts(list){
+
+  const container = document.getElementById('productList');
+  const noResults = document.getElementById('noResults');
+
+  container.innerHTML = '';
+
+  if(!list.length){
+
+    noResults.classList.remove('hidden');
+    return;
+
+  }
+
+  noResults.classList.add('hidden');
+
+  list.forEach(p => {
+
+    const qty = cart[p.id] || 0;
+
+    const row = document.createElement('div');
+
+    row.className =
+      'product-card flex items-center gap-3 bg-neutral-900/70 border border-gold-dark/20 rounded-xl p-2.5';
+
+    const firstImage = imageName(p.images[0]);
+
+    row.innerHTML = `
+
+      <div
+        class="w-16 h-16 rounded-lg overflow-hidden img-placeholder flex-shrink-0 cursor-pointer"
+        onclick="openProductModal(${p.id})">
+
+        <img
+          src="${firstImage}"
+          alt="${p.name}"
+          class="w-full h-full object-cover"
+          onerror="this.onerror=null;this.src='${placeholderSVG()}';">
+
+      </div>
+
+      <div
+        class="flex-1 min-w-0 cursor-pointer"
+        onclick="openProductModal(${p.id})">
+
+        <p class="text-sm font-semibold text-white leading-snug line-clamp-2">
+          ${p.name}
+        </p>
+
+        <div class="flex items-center gap-2 mt-1">
+
+          <span class="font-display font-bold gold-text text-[15px]">
+            ${money(p.price)}
+          </span>
+
+          <span class="text-[10px] text-gray-400 border border-gray-700 rounded-full px-1.5 py-0.5">
+            ${p.categoryLabel}
+          </span>
+
+        </div>
+
+      </div>
+
+      <div class="flex items-center gap-1.5 flex-shrink-0">
+
+        ${
+          qty > 0
+
+          ?
+
+          `
+          <button
+            onclick="event.stopPropagation();changeQty(${p.id},-1)"
+            class="qty-btn w-7 h-7 rounded-full bg-neutral-800 text-gray-300 flex items-center justify-center">
+            −
+          </button>
+
+          <span class="w-5 text-center text-sm font-bold text-white">
+            ${qty}
+          </span>
+
+          <button
+            onclick="event.stopPropagation();changeQty(${p.id},1)"
+            class="qty-btn w-7 h-7 rounded-full bg-gold-muted text-black flex items-center justify-center">
+            +
+          </button>
+          `
+
+          :
+
+          `
+          <button
+            onclick="event.stopPropagation();changeQty(${p.id},1)"
+            class="qty-btn w-8 h-8 rounded-full bg-gold-muted text-black flex items-center justify-center">
+
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4">
+              <path stroke-linecap="round" stroke-linejoin="round"
+              d="M12 4.5v15m7.5-7.5h-15"/>
+            </svg>
+
+          </button>
+          `
+        }
+
+      </div>
+
+    `;
+
+    container.appendChild(row);
+
+  });
+
+}
+
+
+/* =====================================================
+   BÚSQUEDA
+===================================================== */
+
+function normalizeStr(str){
+
+  return str
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g,'')
+    .replace(/[^a-z0-9\s]/g,' ')
+    .trim();
+
+}
+
+function levenshtein(a,b){
+
+  const m=a.length;
+  const n=b.length;
+
+  const dp=Array.from(
+    {length:m+1},
+    ()=>new Array(n+1).fill(0)
+  );
+
+  for(let i=0;i<=m;i++) dp[i][0]=i;
+  for(let j=0;j<=n;j++) dp[0][j]=j;
+
+  for(let i=1;i<=m;i++){
+
+    for(let j=1;j<=n;j++){
+
+      const cost=a[i-1]===b[j-1]?0:1;
+
+      dp[i][j]=Math.min(
+        dp[i-1][j]+1,
+        dp[i][j-1]+1,
+        dp[i-1][j-1]+cost
+      );
+
+    }
+
+  }
+
+  return dp[m][n];
+
+}
+
+function fuzzyWordMatch(q,t){
+
+  if(t.includes(q)||q.includes(t)){
+    return true;
+  }
+
+  const maxLen=Math.max(q.length,t.length);
+
+  if(maxLen<=3){
+    return q===t;
+  }
+
+  const threshold=maxLen<=6?2:3;
+
+  return levenshtein(q,t)<=threshold;
+
+}
+
+function productMatchesQuery(product,query){
+
+  const q=normalizeStr(query);
+
+  if(!q){
+    return true;
+  }
+
+  const words=q.split(/\s+/).filter(Boolean);
+
+  const target=normalizeStr(
+    product.name+' '+
+    product.title+' '+
+    product.category+' '+
+    product.categoryLabel
+  );
+
+  const targetWords=target.split(/\s+/).filter(Boolean);
+
+  return words.every(word =>
+    targetWords.some(t =>
+      fuzzyWordMatch(word,t)
+    )
+  );
+
+}
+
+function getFilteredProducts(){
+
+  const query=document.getElementById('searchInput').value;
+
+  return products.filter(p => {
+
+    const categoryOK =
+      !activeCategory ||
+      p.category===activeCategory;
+
+    const queryOK =
+      productMatchesQuery(p,query);
+
+    return categoryOK && queryOK;
+
+  });
+
+}
+
+function refreshList(){
+
+  renderProducts(
+    getFilteredProducts()
+  );
+
+}
+
+function onSearchInput(){
+
+  const value=
+    document.getElementById('searchInput').value;
+
+  document
+    .getElementById('clearSearchBtn')
+    .classList
+    .toggle('hidden',value.length===0);
+
+  refreshList();
+
+}
+
+function clearSearch(){
+
+  document.getElementById('searchInput').value='';
+
+  document
+    .getElementById('clearSearchBtn')
+    .classList
+    .add('hidden');
+
+  refreshList();
+
+}
+
+
+/* =====================================================
+   CATEGORÍAS
+===================================================== */
+
+function renderCategoryChips(){
+
+  const row=
+    document.getElementById('categoryChipsRow');
+
+  row.innerHTML='';
+
+  categories.forEach(c=>{
+
+    const btn=
+      document.createElement('button');
+
+    btn.type='button';
+
+    btn.dataset.key=c.key;
+
+    btn.textContent=c.label;
+
+    btn.className=
+      'category-chip rounded-full border border-gold-dark/40 px-3 py-1.5 text-xs font-semibold text-gray-300 whitespace-nowrap';
+
+    btn.onclick=()=>{
+      toggleCategory(c.key);
+    };
+
+    row.appendChild(btn);
+
+  });
+
+  updateCategoryUI();
+
+}
+
+function toggleCategory(cat){
+
+  activeCategory=
+    activeCategory===cat
+    ?null
+    :cat;
+
+  updateCategoryUI();
+  refreshList();
+
+}
+
+function clearCategory(){
+
+  activeCategory=null;
+
+  updateCategoryUI();
+  refreshList();
+
+}
+
+function updateCategoryUI(){
+
+  document
+    .querySelectorAll('.category-chip')
+    .forEach(btn=>{
+
+      const active=
+        btn.dataset.key===activeCategory;
+
+      btn.classList.toggle(
+        'bg-gold-muted',
+        active
+      );
+
+      btn.classList.toggle(
+        'text-black',
+        active
+      );
+
+      btn.classList.toggle(
+        'border-transparent',
+        active
+      );
+
+      btn.classList.toggle(
+        'text-gray-300',
+        !active
+      );
+
+    });
+
+  const chip=
+    document.getElementById('activeFilterChip');
+
+  const label=
+    document.getElementById('activeFilterLabel');
+
+  if(activeCategory){
+
+    const found=
+      categories.find(
+        c=>c.key===activeCategory
+      );
+
+    chip.classList.remove('hidden');
+    chip.classList.add('flex');
+
+    label.textContent=
+      found
+      ?found.label
+      :activeCategory;
+
+  }else{
+
+    chip.classList.add('hidden');
+    chip.classList.remove('flex');
+
+  }
+
+}
+
+function goToOffersCategory(){
+
+  activeCategory='combos-oferta';
+
+  switchTab('catalogo');
+
+  updateCategoryUI();
+  refreshList();
+
+  window.scrollTo({
+    top:0,
+    behavior:'smooth'
+  });
+
+}
+
+
+/* =====================================================
+   MODAL + GALERÍA
+===================================================== */
+
+function openProductModal(id){
+
+  const p=
+    products.find(
+      x=>x.id===id
+    );
+
+  if(!p)return;
+
+  currentModalProduct=p;
+
+  document.getElementById('modalCategory').textContent=
+    p.categoryLabel;
+
+  document.getElementById('modalTitle').textContent=
+    p.title;
+
+  document.getElementById('modalPrice').textContent=
+    money(p.price);
+
+  document.getElementById('modalDesc').textContent=
+    p.desc;
+
+  const gallery=
+    document.getElementById('modalGallery');
+
+  const dots=
+    document.getElementById('galleryDots');
+
+  gallery.innerHTML='';
+  dots.innerHTML='';
+
+  p.images.forEach((num,index)=>{
+
+    const slide=
+      document.createElement('div');
+
+    slide.innerHTML=`
+
+      <img
+        src="${imageName(num)}"
+        alt="${p.title} - imagen ${index+1}"
+        onerror="this.onerror=null;this.src='${placeholderSVG()}';">
+
+    `;
+
+    gallery.appendChild(slide);
+
+    if(p.images.length>1){
+
+      const dot=
+        document.createElement('span');
+
+      dot.className=
+        'gallery-dot h-1.5 w-1.5 bg-gray-600 rounded-full';
+
+      if(index===0){
+        dot.classList.add('active');
+      }
+
+      dots.appendChild(dot);
+
+    }
+
+  });
+
+  if(p.images.length>1){
+
+    gallery.onscroll=()=>{
+
+      const index=
+        Math.round(
+          gallery.scrollLeft/
+          gallery.clientWidth
+        );
+
+      [...dots.children].forEach(
+        (dot,i)=>{
+          dot.classList.toggle(
+            'active',
+            i===index
+          );
+        }
+      );
+
+    };
+
+  }
+
+  const specs=
+    document.getElementById('modalSpecs');
+
+  specs.innerHTML='';
+
+  p.specs.forEach(s=>{
+
+    const li=
+      document.createElement('li');
+
+    li.className=
+      'flex items-start gap-2 text-sm text-gray-300';
+
+    li.innerHTML=`
+
+      <svg class="w-4 h-4 gold-text flex-shrink-0 mt-0.5"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2.2">
+
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M4.5 12.75l6 6 9-13.5"/>
+
+      </svg>
+
+      <span>${s}</span>
+
+    `;
+
+    specs.appendChild(li);
+
+  });
+
+  const modal=
+    document.getElementById('productModal');
+
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+
+  document.body.style.overflow='hidden';
+
+}
+
+function closeProductModal(){
+
+  const modal=
+    document.getElementById('productModal');
+
+  modal.classList.add('hidden');
+  modal.classList.remove('flex');
+
+  document.body.style.overflow='';
+
+}
+
+function addFromModal(){
+
+  if(!currentModalProduct){
+    return;
+  }
+
+  changeQty(
+    currentModalProduct.id,
+    1
+  );
+
+  showToast(
+    currentModalProduct.name+
+    ' agregado'
+  );
+
+}
+
+
+/* =====================================================
+   CARRITO
+===================================================== */
+
+function changeQty(id,delta){
+
+  const current=
+    cart[id]||0;
+
+  const next=
+    Math.max(
+      0,
+      current+delta
+    );
+
+  if(next===0){
+    delete cart[id];
+  }else{
+    cart[id]=next;
+  }
+
+  localStorage.setItem(
+    'powertech_cart',
+    JSON.stringify(cart)
+  );
+
+  updateCartUI();
+  refreshList();
+
+}
+
+function cartTotal(){
+
+  return Object.entries(cart)
+    .reduce((sum,[id,qty])=>{
+
+      const p=
+        products.find(
+          x=>x.id===Number(id)
+        );
+
+      if(!p || p.price===null){
+        return sum;
+      }
+
+      return sum+
+        p.price*qty;
+
+    },0);
+
+}
+
+function cartCount(){
+
+  return Object.values(cart)
+    .reduce(
+      (a,b)=>a+b,
+      0
+    );
+
+}
+
+function updateCartUI(){
+
+  document.getElementById('cartCount').textContent=
+    cartCount();
+
+  const total=
+    cartTotal();
+
+  document.getElementById('cartTotal').textContent=
+    money(total);
+
+  const btn=
+    document.getElementById('checkoutBtn');
+
+  const warning=
+    document.getElementById('minPurchaseWarning');
+
+  const missing=
+    document.getElementById('missingAmount');
+
+  if(total>=MIN_PURCHASE){
+
+    btn.disabled=false;
+
+    btn.classList.remove(
+      'bg-neutral-800',
+      'text-gray-400',
+      'cursor-not-allowed'
+    );
+
+    btn.classList.add(
+      'bg-gold-muted',
+      'text-black'
+    );
+
+    warning.classList.add('hidden');
+
+  }else{
+
+    btn.disabled=true;
+
+    btn.classList.add(
+      'bg-neutral-800',
+      'text-gray-400',
+      'cursor-not-allowed'
+    );
+
+    btn.classList.remove(
+      'bg-gold-muted',
+      'text-black'
+    );
+
+    if(total>0){
+
+      warning.classList.remove(
+        'hidden'
+      );
+
+      missing.textContent=
+        money(
+          MIN_PURCHASE-total
+        );
+
+    }else{
+
+      warning.classList.add(
+        'hidden'
+      );
+
+    }
+
+  }
+
+  renderCartItems();
+
+}
+
+function renderCartItems(){
+
+  const container=
+    document.getElementById('cartItems');
+
+  const empty=
+    document.getElementById('cartEmptyMsg');
+
+  const entries=
+    Object.entries(cart);
+
+  if(entries.length===0){
+
+    container.innerHTML='';
+
+    empty.classList.remove(
+      'hidden'
+    );
+
+    return;
+
+  }
+
+  empty.classList.add('hidden');
+
+  container.innerHTML='';
+
+  entries.forEach(([id,qty])=>{
+
+    const p=
+      products.find(
+        x=>x.id===Number(id)
+      );
+
+    if(!p)return;
+
+    const row=
+      document.createElement('div');
+
+    row.className=
+      'flex items-center gap-3 border-b border-neutral-800 pb-3';
+
+    row.innerHTML=`
+
+      <div class="w-12 h-12 rounded-lg overflow-hidden img-placeholder flex-shrink-0">
+
+        <img
+          src="${imageName(p.images[0])}"
+          alt="${p.name}"
+          class="w-full h-full object-cover"
+          onerror="this.onerror=null;this.src='${placeholderSVG()}';">
+
+      </div>
+
+      <div class="flex-1 min-w-0">
+
+        <p class="text-sm font-medium text-white leading-snug">
+          ${p.name}
+        </p>
+
+        <p class="text-xs gold-text font-semibold mt-0.5">
+          ${money(p.price)} c/u
+        </p>
+
+      </div>
+
+      <div class="flex items-center gap-1.5">
+
+        <button
+          onclick="changeQty(${p.id},-1)"
+          class="qty-btn w-6 h-6 rounded-full bg-neutral-800 text-gray-300 flex items-center justify-center">
+          −
+        </button>
+
+        <span class="w-5 text-center text-sm font-bold text-white">
+          ${qty}
+        </span>
+
+        <button
+          onclick="changeQty(${p.id},1)"
+          class="qty-btn w-6 h-6 rounded-full bg-gold-muted text-black flex items-center justify-center">
+          +
+        </button>
+
+      </div>
+
+    `;
+
+    container.appendChild(row);
+
+  });
+
+}
+
+function openCart(){
+
+  const modal=
+    document.getElementById('cartModal');
+
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+
+  document.body.style.overflow='hidden';
+
+  updateCartUI();
+
+}
+
+function closeCart(){
+
+  const modal=
+    document.getElementById('cartModal');
+
+  modal.classList.add('hidden');
+  modal.classList.remove('flex');
+
+  document.body.style.overflow='';
+
+}
+
+
+/* =====================================================
+   WHATSAPP
+===================================================== */
+
+function sendOrder(){
+
+  const total=
+    cartTotal();
+
+  if(
+    total<MIN_PURCHASE ||
+    total===0
+  ){
+    return;
+  }
+
+  let msg=
+    `¡Hola Powertech! 👋 Quiero hacer el siguiente pedido:\n\n`;
+
+  Object.entries(cart)
+    .forEach(([id,qty])=>{
+
+      const p=
+        products.find(
+          x=>x.id===Number(id)
+        );
+
+      if(!p)return;
+
+      msg+=
+        `▪️ ${qty}x ${p.name}\n`;
+
+      msg+=
+        `    ${money(p.price)} c/u\n\n`;
+
+    });
+
+  msg+=
+    `------------------------------\n`;
+
+  msg+=
+    `*TOTAL: ${money(total)}*\n\n`;
+
+  msg+=
+    `Quedo a la espera de la confirmación. ¡Gracias!`;
+
+  const url=
+    `https://wa.me/${WHATSAPP_NUMBER}?text=`+
+    encodeURIComponent(msg);
+
+  window.open(
+    url,
+    '_blank'
+  );
+
+}
+
+
+/* =====================================================
+   TABS
+===================================================== */
+
+const tabNames=[
+  'catalogo',
+  'contacto',
+  'nosotros',
+  'ofertas'
+];
+
+function capitalize(str){
+
+  return str.charAt(0).toUpperCase()+
+    str.slice(1);
+
+}
+
+function switchTab(tab){
+
+  tabNames.forEach(t=>{
+
+    const section=
+      document.getElementById(
+        'tab'+capitalize(t)
+      );
+
+    const btn=
+      document.getElementById(
+        'tabBtn'+capitalize(t)
+      );
+
+    if(section){
+
+      section.classList.toggle(
+        'hidden',
+        t!==tab
+      );
+
+    }
+
+    if(btn){
+
+      btn.classList.toggle(
+        'active',
+        t===tab
+      );
+
+    }
+
+  });
+
+  window.scrollTo({
+    top:0,
+    behavior:'smooth'
+  });
+
+}
+
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+let toastTimeout;
+
+function showToast(text){
+
+  const toast=
+    document.getElementById('toast');
+
+  toast.textContent=text;
+
+  toast.classList.remove(
+    'hidden'
+  );
+
+  clearTimeout(
+    toastTimeout
+  );
+
+  toastTimeout=
+    setTimeout(
+      ()=>{
+        toast.classList.add(
+          'hidden'
+        );
+      },
+      1800
+    );
+
+}
+
+
+/* =====================================================
+   INICIO
+===================================================== */
+
+document.addEventListener(
+  'DOMContentLoaded',
+  ()=>{
+    renderCategoryChips();
+    refreshList();
+    updateCartUI();
+  }
+);
+
+</script>
+
+</body>
+</html>
