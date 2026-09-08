@@ -192,20 +192,36 @@ h1,h2,h3,.font-display{
 
 .gallery{
   display:flex;
+  width:100%;
+  height:100%;
   overflow-x:auto;
+  overflow-y:hidden;
   scroll-snap-type:x mandatory;
   scroll-behavior:smooth;
+  -webkit-overflow-scrolling:touch;
+  overscroll-behavior-x:contain;
+  touch-action:pan-x;
 }
 
 .gallery > div{
   flex:0 0 100%;
+  min-width:100%;
+  height:100%;
   scroll-snap-align:center;
 }
 
 .gallery img{
+  display:block;
   width:100%;
   height:100%;
   object-fit:cover;
+  user-select:none;
+  -webkit-user-drag:none;
+}
+
+#productModal > div:last-child{
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
 }
 
 .gallery-dot{
@@ -1035,7 +1051,7 @@ const products = [
  id:1,
  name:"Cargador Samsung",
  title:"Cargador Samsung",
- price:6800,
+ price:9900,
  category:"cargadores",
  categoryLabel:"Cargadores",
  images:[1],
@@ -1744,6 +1760,98 @@ const products = [
  desc:"Smartwatch H900 con diseño moderno y funciones inteligentes. Consultá el precio y disponibilidad.",
  specs:["Modelo H900","Funciones inteligentes","Precio a consultar","Consultar disponibilidad"]
 }
+,
+
+/* 97 */
+{
+ id:97,
+ name:"Perfume Árabe Importado 1",
+ title:"Perfume Árabe Importado 1",
+ price:null,
+ category:"perfumes",
+ categoryLabel:"Perfumes",
+ images:["per1"],
+ desc:"Perfume árabe importado, ideal para sumar una opción atractiva de perfumería a tu catálogo.",
+ specs:["Perfume árabe importado","Producto para reventa","Presentación comercial","Precio a consultar"]
+},
+
+/* 98 */
+{
+ id:98,
+ name:"Perfume Árabe Importado 2",
+ title:"Perfume Árabe Importado 2",
+ price:null,
+ category:"perfumes",
+ categoryLabel:"Perfumes",
+ images:["per2"],
+ desc:"Perfume árabe importado con una presentación ideal para exhibición y reventa.",
+ specs:["Perfume árabe importado","Producto para reventa","Presentación comercial","Precio a consultar"]
+},
+
+/* 99 */
+{
+ id:99,
+ name:"Perfume Árabe Importado 3",
+ title:"Perfume Árabe Importado 3",
+ price:null,
+ category:"perfumes",
+ categoryLabel:"Perfumes",
+ images:["per3"],
+ desc:"Perfume árabe importado, pensado para ofrecer una alternativa diferente en perfumería.",
+ specs:["Perfume árabe importado","Producto para reventa","Presentación comercial","Precio a consultar"]
+},
+
+/* 100 */
+{
+ id:100,
+ name:"Perfume Árabe Importado 4",
+ title:"Perfume Árabe Importado 4",
+ price:null,
+ category:"perfumes",
+ categoryLabel:"Perfumes",
+ images:["per4"],
+ desc:"Perfume árabe importado con presentación comercial, ideal para sumar variedad al mostrador.",
+ specs:["Perfume árabe importado","Producto para reventa","Presentación comercial","Precio a consultar"]
+},
+
+/* 101 */
+{
+ id:101,
+ name:"Perfume Árabe Importado 5",
+ title:"Perfume Árabe Importado 5",
+ price:null,
+ category:"perfumes",
+ categoryLabel:"Perfumes",
+ images:["per5"],
+ desc:"Perfume árabe importado, una opción atractiva para ampliar la oferta de productos de cuidado personal.",
+ specs:["Perfume árabe importado","Producto para reventa","Presentación comercial","Precio a consultar"]
+},
+
+/* 102 */
+{
+ id:102,
+ name:"Perfume Árabe Importado 6",
+ title:"Perfume Árabe Importado 6",
+ price:null,
+ category:"perfumes",
+ categoryLabel:"Perfumes",
+ images:["per6"],
+ desc:"Perfume árabe importado, ideal para exhibir y comercializar junto a otras opciones de perfumería.",
+ specs:["Perfume árabe importado","Producto para reventa","Presentación comercial","Precio a consultar"]
+},
+
+/* 103 */
+{
+ id:103,
+ name:"Tarjeta SUBE",
+ title:"Tarjeta SUBE",
+ price:null,
+ category:"chips-sube",
+ categoryLabel:"Chips y SUBE",
+ images:["sube"],
+ desc:"Tarjeta SUBE para transporte público. Producto de alta rotación para kioscos y comercios.",
+ specs:["Tarjeta SUBE","Ideal para kioscos y comercios","Producto de alta rotación","Precio a consultar"]
+}
 
 ];
 
@@ -1770,6 +1878,9 @@ function money(n){
 }
 
 function imageName(num){
+  if(typeof num === 'string'){
+    return num.includes('.') ? num : `${num}.jpg`;
+  }
   return `prod${num}.jpg`;
 }
 
@@ -2226,61 +2337,62 @@ function openProductModal(id){
   gallery.innerHTML='';
   dots.innerHTML='';
 
+  gallery.scrollLeft=0;
+  gallery.onscroll=null;
+
   p.images.forEach((num,index)=>{
 
-    const slide=
-      document.createElement('div');
+    const slide=document.createElement('div');
 
     slide.innerHTML=`
-
       <img
         src="${imageName(num)}"
         alt="${p.title} - imagen ${index+1}"
+        draggable="false"
         onerror="this.onerror=null;this.src='${placeholderSVG()}';">
-
     `;
 
     gallery.appendChild(slide);
 
     if(p.images.length>1){
+      const dot=document.createElement('button');
+      dot.type='button';
+      dot.setAttribute('aria-label',`Ver imagen ${index+1}`);
+      dot.className='gallery-dot h-1.5 w-1.5 bg-gray-600 rounded-full cursor-pointer';
 
-      const dot=
-        document.createElement('span');
+      if(index===0) dot.classList.add('active');
 
-      dot.className=
-        'gallery-dot h-1.5 w-1.5 bg-gray-600 rounded-full';
-
-      if(index===0){
-        dot.classList.add('active');
-      }
+      dot.onclick=()=>{
+        gallery.scrollTo({
+          left:index*gallery.clientWidth,
+          behavior:'smooth'
+        });
+      };
 
       dots.appendChild(dot);
-
     }
-
   });
 
   if(p.images.length>1){
-
     gallery.onscroll=()=>{
+      const index=Math.max(0,Math.min(
+        p.images.length-1,
+        Math.round(gallery.scrollLeft/Math.max(1,gallery.clientWidth))
+      ));
 
-      const index=
-        Math.round(
-          gallery.scrollLeft/
-          gallery.clientWidth
-        );
-
-      [...dots.children].forEach(
-        (dot,i)=>{
-          dot.classList.toggle(
-            'active',
-            i===index
-          );
-        }
-      );
-
+      [...dots.children].forEach((dot,i)=>{
+        dot.classList.toggle('active',i===index);
+      });
     };
 
+    const oldHint=document.querySelector('#gallerySwipeHint');
+    if(oldHint) oldHint.remove();
+
+    const hint=document.createElement('p');
+    hint.id='gallerySwipeHint';
+    hint.className='text-[10px] text-gray-500 text-center -mt-2 mb-3';
+    hint.textContent='Deslizá para ver más fotos';
+    dots.insertAdjacentElement('afterend',hint);
   }
 
   const specs=
